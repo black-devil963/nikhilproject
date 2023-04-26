@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import { Dialog } from '@mui/material';
 
+var copy;
 
 class ImagePull extends React.Component{
   constructor(props){
@@ -15,13 +16,17 @@ class ImagePull extends React.Component{
   PullImage(){
     fetch(`http://localhost:9000/PullImg-${this.state.data.image}-${this.state.data.tag}`)
     .then(res=>res.text())
-    .then(res=>this.setState({apiResponse:res.replace(/\\t/gi,' ').replace(/\"/gi,'').replace(/\\n/gi, '')}));//.then(res=>this.setState({apiResponse1:res.replace(/\\t/gi, '   ')}));
+    .then(res=>{this.setState({apiResponse:res.replace(/\\t/gi,' ').replace(/\"/gi,'').replace(/\\n/gi, '')});copy=res.replace(/\\t/gi,' ').replace(/\"/gi,'').replace(/\\n/gi, '');})//.then(res=>this.setState({apiResponse1:res.replace(/\\t/gi, '   ')}));
   }
   componentWillMount(){
     
   }
   
 render(){
+  function copyText(){
+    navigator.clipboard.writeText(copy);
+    alert("Copied!!");
+    }
   return (
     <Dialog onClose={this.props.handleClose} open={this.props.open}>
     <Card sx={{ width: 375}}>
@@ -43,7 +48,7 @@ render(){
       <Button variant="contained"onClick={event =>{this.PullImage();}} >Submit To Pull Image</Button>
     </Grid>
     <Grid item xs={2}>
-    <p>{this.state.apiResponse}</p> 
+    <p onClick={copyText}>{this.state.apiResponse}</p> 
     </Grid>
     </Grid>
     </CardContent>

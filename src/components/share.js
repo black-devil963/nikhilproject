@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 import Containerimage from '../Containerimage.png';
 import { Dialog } from '@mui/material';
 
+var copy;
 
 class share extends React.Component{
   constructor(props){
@@ -17,15 +18,27 @@ class share extends React.Component{
   }
   createcontainer(){
     console.log(this.state.data);
-    fetch(`http://localhost:9000/shareContainers-${this.state.data.name}-${this.state.data.image}-${this.state.data.tag}`)
+    fetch('http://localhost:9000/shareContainers', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name:this.state.data.name,
+        image:this.state.data.image,
+        tag:this.state.data.tag
+      })
+    })
     .then(res=>res.text())
-    .then(res=>this.setState({apiResponse:res.replace(/\\t/gi,' ').replace(/\"/gi,'').replace(/\\n/gi, '')}));//.then(res=>this.setState({apiResponse1:res.replace(/\\t/gi, '   ')}));
+    .then(res=>{this.setState({apiResponse:res.replace(/\\t/gi,' ').replace(/\"/gi,'').replace(/\\n/gi, '')});copy=res.replace(/\\t/gi,' ').replace(/\"/gi,'').replace(/\\n/gi, '');})//.then(res=>this.setState({apiResponse1:res.replace(/\\t/gi, '   ')}));
   }
   componentWillMount(){
     
   }
   
 render(){
+  function copyText(){
+    navigator.clipboard.writeText(copy);
+    alert("Copied!!");
+    }
   return (
     <Dialog onClose={this.props.handleClose} open={this.props.open}>
     <Card sx={{ width: 375 }}>
@@ -52,7 +65,7 @@ render(){
       <Button variant="contained" onClick={event =>{this.createcontainer();}}>Share Container</Button>
     </Grid>
     <Grid item xs={2}>
-    <p>{this.state.apiResponse}</p> 
+    <p onClick={copyText}>{this.state.apiResponse}</p> 
     </Grid>
     </Grid>
     </CardContent>
