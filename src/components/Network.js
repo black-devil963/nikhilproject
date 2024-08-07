@@ -90,6 +90,7 @@ for (let j = 0; j < sides; j++) {
                     ctx.lineTo(xhaxagonal, yhaxagonal); // Draw lines to subsequent vertices
                 }
             }
+   ctx.closePath();
 
   
 ctx.stroke();
