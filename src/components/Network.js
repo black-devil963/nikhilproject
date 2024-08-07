@@ -73,7 +73,7 @@ ctx.beginPath();
 ctx.fillStyle = "red";
 ctx.font = "10px Verdana";
 ctx.fillText(container[i],352+200*Math.cos(i*angle*3.14/180),284-200*Math.sin(i*angle*3.14/180));
-ctx.arc(390+200*Math.cos(i*angle*3.14/180), 284-200*Math.sin(i*angle*3.14/180), 40, 0, 2 * Math.PI);
+//ctx.arc(390+200*Math.cos(i*angle*3.14/180), 284-200*Math.sin(i*angle*3.14/180), 40, 0, 2 * Math.PI);
 ctx.stroke();
 }
   }
