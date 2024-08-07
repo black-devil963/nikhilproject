@@ -73,7 +73,25 @@ ctx.beginPath();
 ctx.fillStyle = "red";
 ctx.font = "10px Verdana";
 ctx.fillText(container[i],352+200*Math.cos(i*angle*3.14/180),284-200*Math.sin(i*angle*3.14/180));
+  //container circle
 //ctx.arc(390+200*Math.cos(i*angle*3.14/180), 284-200*Math.sin(i*angle*3.14/180), 40, 0, 2 * Math.PI);
+
+const sides = 6; // Number of sides for a hexagon
+const angleStep = 2 * Math.PI / sides; // Angle between vertices in radians
+ctx.beginPath();
+for (let j = 0; j < sides; j++) {
+                // Calculate the vertex position
+                const xhaxagonal = 390+200*Math.cos(i*angle*3.14/180) + 40 * Math.cos(j * angleStep);
+                const yhaxagonal = 284-200*Math.sin(i*angle*3.14/180) + 40 * Math.sin(j * angleStep);
+                
+                if (j === 0) {
+                    ctx.moveTo(xhaxagonal, yhaxagonal); // Move to the first vertex
+                } else {
+                    ctx.lineTo(xhaxagonal, yhaxagonal); // Draw lines to subsequent vertices
+                }
+            }
+
+  
 ctx.stroke();
 }
   }
